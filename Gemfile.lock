@@ -462,3 +462,6 @@ DEPENDENCIES
   useragent
   xmpp4r
   yajl-ruby
+
+BUNDLED WITH
+   1.10.2
