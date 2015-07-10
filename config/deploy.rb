@@ -77,11 +77,13 @@ namespace :unicorn do
   task :start do
     on roles(:app) do
       within current_path do
-        if test " [ -s #{fetch(:unicorn_pidfile)} ] "
-          warn "Unicorn is already running."
-        else
-          with "UNICORN_PID" => fetch(:unicorn_pidfile) do
-            execute :bundle, :exec, :unicorn, "-D -c ./config/unicorn.rb"
+        with rails_env: fetch(:rails_env) do
+          if test " [ -s #{fetch(:unicorn_pidfile)} ] "
+            warn "Unicorn is already running."
+          else
+            with "UNICORN_PID" => fetch(:unicorn_pidfile) do
+              execute :bundle, :exec, :unicorn, "-D -c ./config/unicorn.rb"
+            end
           end
         end
       end
